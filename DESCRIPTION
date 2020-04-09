@@ -1,0 +1,14 @@
+Package: prelim.knockoffs
+Title: Implements the knockoff method by Barber & Candes
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Sarah",
+           family = "Teichman",
+           role = c("aut", "cre"),
+           email = "teichs@uw.edu",
+Description: This package implements the knockoff method described in Barber & Candes
+"Controlling the False Discovery Rate via Knockoffs" (2015). This is for the course 
+STAT 572 in the Statistics Department at the University of Washington.
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
