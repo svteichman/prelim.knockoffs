@@ -1,3 +1,9 @@
+#' Equi-correlated Knockoffs
+#' Creates fixed-X knockoffs using the equi-correlated method
+#'
+#' @param X Design matrix to create knockoffs for.
+#'
+#' @return The knockoff nxp design matrix.
 create_equi <- function(X) {
   rank <- qr(X)$rank
   p <- ncol(X)

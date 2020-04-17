@@ -1,3 +1,9 @@
+#' SDP Knockoffs
+#' Creates fixed-X knockoffs using the SDP method
+#'
+#' @param X Design matrix to create knockoffs for.
+#'
+#' @return The knockoff nxp design matrix.
 create_sdp <- function(X) {
   rank <- qr(X)$rank
   p <- ncol(X)
@@ -15,11 +21,12 @@ create_sdp <- function(X) {
   s <- create.solve_sdp(Sigma)
   s_small <- s < 1e-5
   s[s_small] <- 0
-  u_tild <- get_u_tild(X)
 
   CtC <- 2*diag(s)- diag(s) %*% Sigma_inv %*% diag(s)
   CtC_svd <- svd_sign(CtC)
   CtC_d <- CtC_svd$d
   CtC_v <- CtC_svd$v
   X_ko <- X %*% (diag(p) - Sigma_inv %*% diag(s)) + u_tild %*% diag(sqrt(CtC_d)) %*% t(CtC_v)
+
+  return(X_ko)
 }

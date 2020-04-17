@@ -1,4 +1,15 @@
-solve_sdp <- function(Sigma, gaptol = 1e-6, maxit = 1000, verbose = FALSE) {
+#' SDP using Rdsdp
+#' Solves the optimation problem to choose s for the SDP knockoff method, using a SDP solver
+#' implemented in Rdsdp. Specifically, this solves the problem:
+#' \eqn{\text{Maximize}\sum_{j=1}^p s_j} subject to the linear constraint \eqn{0 \leq s_j \leq 1\ \forall\ s_j}
+#' and the PSD constraint \eqn{2\Sigma - \text{diag}\{s\} \succeq 0}.
+#'
+#' @param Sigma Normalized empirical covariance matrix to optimize s for.
+#' @param gaptol The tolerance for the duality gap as a fraction of the objective functions (a parameter in Rdsdp).
+#' @param maxit The maximum number of iterations allowed (a paramter in Rdsdp).
+#'
+#' @return The vector of s values that solve the above optimization problem.
+solve_sdp <- function(Sigma, gaptol = 1e-6, maxit = 1000) {
   p <- nrow(Sigma)
 
   # Make linear cone blocks

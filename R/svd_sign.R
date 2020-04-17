@@ -1,3 +1,10 @@
+#' SVD with fixed sign
+#' Performs SVD and then adjusts the sign of each column of the U matrix so that the value
+#' with the greatest magnitude is positive. It fixes the signs of the V matrix accordingly.
+#'
+#' @param X Design matrix to create knockoffs for.
+#'
+#' @return The SVD of X: U, a vector of singular values d, V, such that \eqn{X = Udiag\{d\}V^T}.
 svd_sign <- function(X) {
   X_svd <- svd(X)
 
