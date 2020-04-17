@@ -50,15 +50,15 @@ create_knockoffs <- function(X, y, method = c('sdp','equi')) {
     y <- c(y, y_extra)
   }
 
-  sum_squared <- colSums(X^2)
-  X_scaled <- X/sqrt(sum_squared) #normalize X such that X^TX = Sigma, Sigma_jj = 1 for all j
+  scale_factor <- sqrt(colSums(X^2))
+  X_scaled <- t(t(X)/scale_factor) #normalize X such that X^TX = Sigma, Sigma_jj = 1 for all j
 
   X_knock = switch(match.arg(method),
-              "equi" = create_equi(X),
-              "sdp"  = create_sdp(X)
+              "equi" = create_equi(X_scaled),
+              "sdp"  = create_sdp(X_scaled)
   )
 
-  return(list(X, X_knock, y))
+  return(list(X_scaled, X_knock, y))
 }
 
 
