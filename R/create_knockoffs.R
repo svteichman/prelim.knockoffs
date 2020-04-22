@@ -12,11 +12,11 @@
 #'  \item{X_knock}{n-by-p matrix of knockoff variables.}
 #'  \item{y}{vector of observed responses (augmented if \eqn{n < 2p}). }
 #'
-#' @references
-#'   Barber and Candes,
-#'   Controlling the false discovery rate via knockoffs.
-#'   Ann. Statist. 43 (2015), no. 5, 2055--2085.
-#'   \href{https://projecteuclid.org/euclid.aos/1438606853}
+#' @source
+#' Barber and Candes,
+#' Controlling the false discovery rate via knockoffs.
+#' Ann. Statist. 43 (2015), no. 5, 2055--2085.
+#' https://projecteuclid.org/euclid.aos/1438606853
 #'
 #' @details
 #' This creates p knockoff variables for a fixed design matrix of size n by p. These knockoffs can be
@@ -24,10 +24,10 @@
 #'
 #' @examples
 #' p <- 50; n <- 100; k <- 5
-#' X <- matrix(rnorm(n*p), nrow = n)
+#' X <- matrix(stats::rnorm(n*p), nrow = n)
 #' true_covar <- sample(p, k)
 #' beta <- 5 * (1:p %in% true_covar)
-#' y <- X %*% beta + rnorm(n, mean = 0, sd = 1)
+#' y <- X %*% beta + stats::rnorm(n, mean = 0, sd = 1)
 #' knock <- create_knockoffs(X, y, method = 'sdp')
 #'
 #' @export
@@ -46,7 +46,7 @@ create_knockoffs <- function(X, y, method = c('sdp','equi')) {
 
     X <- rbind(X, matrix(0,nrow = extra, ncol = p)) #augment X with 0's
     set.seed(0)
-    y_extra <- rnorm(extra, mean = 0, sd = sig_hat)
+    y_extra <- stats::rnorm(extra, mean = 0, sd = sig_hat)
     y <- c(y, y_extra)
   }
 

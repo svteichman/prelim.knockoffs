@@ -13,7 +13,7 @@ rate at a given level.
 }
 \references{
 Barber and Candes,
-  Controlling the false discovery rate via knockoffs.
-  Ann. Statist. 43 (2015), no. 5, 2055--2085.
-  \href{https://projecteuclid.org/euclid.aos/1438606853}
+Controlling the false discovery rate via knockoffs.
+Ann. Statist. 43 (2015), no. 5, 2055--2085.
+https://projecteuclid.org/euclid.aos/1438606853
 }

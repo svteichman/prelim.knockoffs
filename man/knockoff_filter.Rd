@@ -36,16 +36,16 @@ rate at a given level.
 }
 \examples{
 p <- 50; n <- 100; k <- 5
-X <- matrix(rnorm(n*p), nrow = n)
+X <- matrix(stats::rnorm(n*p), nrow = n)
 true_covar <- sample(p, k)
 beta <- 5 * (1:p \%in\% true_covar)
-y <- X \%*\% beta + rnorm(n, mean = 0, sd = 1)
-results <- knockoff_filter(X, y, 'equi', 0.20, T)
+y <- X \%*\% beta + stats::rnorm(n, mean = 0, sd = 1)
+results <- knockoff_filter(X, y, 'equi', 0.20, TRUE)
 
 }
 \references{
 Barber and Candes,
-  Controlling the false discovery rate via knockoffs.
-  Ann. Statist. 43 (2015), no. 5, 2055--2085.
-  \href{https://projecteuclid.org/euclid.aos/1438606853}
+Controlling the false discovery rate via knockoffs.
+Ann. Statist. 43 (2015), no. 5, 2055--2085.
+https://projecteuclid.org/euclid.aos/1438606853
 }

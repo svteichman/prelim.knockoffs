@@ -20,7 +20,7 @@ create_sdp <- function(X) {
   Sigma <- v %*% diag(d^2) %*% t(v)
   Sigma_inv <- v %*% diag(1/(d^2)) %*% t(v)
 
-  s <- create.solve_sdp(Sigma)
+  s <- solve_sdp(Sigma)
   s_small <- s < 1e-5
   s[s_small] <- 0
 
