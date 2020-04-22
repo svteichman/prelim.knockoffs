@@ -13,7 +13,7 @@
 #' @export
 solve_sdp <- function(Sigma, gaptol = 1e-6, maxit = 1000) {
   p <- nrow(Sigma)
-
+  corr <- stats::cov2cor(Sigma)
   # Make linear cone blocks
   # Constraint that each s_j >= 0
   A1 <- diag(-1,p)
@@ -27,11 +27,11 @@ solve_sdp <- function(Sigma, gaptol = 1e-6, maxit = 1000) {
   for (i in 1:p) {
     A_PSD[i,((i-1)*p+i)] <- 1
   }
-  C_PSD <- c(2*Sigma)
+  C_PSD <- c(2*corr)
 
   # Combine linear and PSD cone blocks
   A <- cbind(A1, A2, A_PSD)
-  C <- c(C1, C2, C_PSD)
+  C <- matrix(c(C1, C2, C_PSD),1)
 
   # Describe the size of each block (linear, then PSD)
   K <- list(p, 2*p)
