@@ -5,6 +5,8 @@
 #' @param X Design matrix to create knockoffs for.
 #'
 #' @return The SVD of X: U, a vector of singular values d, V, such that \eqn{X = Udiag\{d\}V^T}.
+#'
+#' @export
 svd_sign <- function(X) {
   X_svd <- svd(X)
 

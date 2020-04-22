@@ -9,6 +9,8 @@
 #' @param maxit The maximum number of iterations allowed (a paramter in Rdsdp).
 #'
 #' @return The vector of s values that solve the above optimization problem.
+#'
+#' @export
 solve_sdp <- function(Sigma, gaptol = 1e-6, maxit = 1000) {
   p <- nrow(Sigma)
 

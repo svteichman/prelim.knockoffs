@@ -58,7 +58,9 @@ create_knockoffs <- function(X, y, method = c('sdp','equi')) {
               "sdp"  = create_sdp(X_scaled)
   )
 
-  return(list(X_scaled, X_knock, y))
+  res <- list(X_scaled, X_knock, y)
+  names(res) <- c("X","Xk","y")
+  return(res)
 }
 
 

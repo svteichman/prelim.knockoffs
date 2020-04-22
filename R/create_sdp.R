@@ -4,6 +4,8 @@
 #' @param X Design matrix to create knockoffs for.
 #'
 #' @return The knockoff nxp design matrix.
+#'
+#' @export
 create_sdp <- function(X) {
   rank <- qr(X)$rank
   p <- ncol(X)

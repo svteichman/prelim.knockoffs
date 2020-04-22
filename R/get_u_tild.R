@@ -6,6 +6,8 @@
 #' @param X Design matrix to create knockoffs for.
 #'
 #' @return The orthonormal nxp matrix \eqn{\widetilde{U}}.
+#'
+#' @export
 get_u_tild <- function(X) {
   n <- nrow(X)
   p <- ncol(X)
