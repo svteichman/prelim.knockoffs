@@ -6,7 +6,7 @@
 #' @param q the desired FDR.
 #' @param plus a boolean T/F, true for the Knockoff+ procedure and false for the Knockoff procedure.
 #'
-#' @return A threshold T to use for variable selection.
+#' @return A threshold to use for variable selection.
 #'
 #' @export
 compute_threshold <- function(W, q, plus) {

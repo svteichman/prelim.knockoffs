@@ -14,7 +14,7 @@ compute_threshold(W, q, plus)
 \item{plus}{a boolean T/F, true for the Knockoff+ procedure and false for the Knockoff procedure.}
 }
 \value{
-A threshold T to use for variable selection.
+A threshold to use for variable selection.
 }
 \description{
 Calculates the threshold T for variable selection for the Knockoff and Knockoff+ procedures.

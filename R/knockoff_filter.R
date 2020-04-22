@@ -14,7 +14,7 @@
 #'  \item{Xk}{n-by-p matrix of knockoff variables.}
 #'  \item{y}{vector of observed responses (augmented if \eqn{n < 2p}). }
 #'  \item{W}{vector of test statistics.}
-#'  \item{T}{threshold for variable selection.}
+#'  \item{thresh}{threshold for variable selection.}
 #'  \item{Selected}{list of selected variables.}
 #'
 #' @references
