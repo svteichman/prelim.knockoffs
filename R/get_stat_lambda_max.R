@@ -13,6 +13,7 @@
 get_stat_lambda_max <- function(X, Xk, y) {
   # construct X matrix
   X_aug <- cbind(X, Xk)
+
   n <- nrow(X_aug)
   p <- ncol(X_aug)
   X_aug <- scale(X_aug)[,] #standardize
@@ -25,7 +26,8 @@ get_stat_lambda_max <- function(X, Xk, y) {
   lambda <- lambda_max * (lambda_min/lambda_max)^k
 
   # fit penalized regression via glmnet
-  mod <- glmnet::glmnet(X_aug, y, family = "gaussian", lambda = lambda)
+  mod <- glmnet::glmnet(X_aug, y, family = "gaussian", lambda = lambda, intercept=T,
+                        standardize=F, standardize.response=F)
   first_entry <- function(vect) {
     index <- ifelse(sum(abs(vect) > 0) == 0, 0, min(which(abs(vect) > 0)))
     return(index)
@@ -37,11 +39,9 @@ get_stat_lambda_max <- function(X, Xk, y) {
   # calculate W_j's
   Z <- lam_vals[1:(p/2)]
   Z_tild <- lam_vals[(p/2 + 1):p]
-  sign <- Z > Z_tild
+  sign <- sign(Z - Z_tild)
   W <- pmax(Z, Z_tild)
-  W <- -W*(1-sign) + W*1*sign
-  set_zero <- which(W == 0)
-  W[set_zero] <- 0
+  W <- W*sign
 
   return(W)
 }

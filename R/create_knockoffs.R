@@ -32,7 +32,7 @@
 #'
 #' @export
 create_knockoffs <- function(X, y, method = c('sdp','equi')) {
-  method = match.arg(method)
+  #method = match.arg(method)
   n = nrow(X)
   p = ncol(X)
 
@@ -50,20 +50,18 @@ create_knockoffs <- function(X, y, method = c('sdp','equi')) {
     y <- c(y, y_extra)
   }
 
-  scale_factor <- sqrt(colSums(X^2))
-  X_scaled <- t(t(X)/scale_factor) #normalize X such that X^TX = Sigma, Sigma_jj = 1 for all j
+  #scale_factor <- sqrt(colSums(X^2))
+  #X_scaled <- t(t(X)/scale_factor) #normalize X such that X^TX = Sigma, Sigma_jj = 1 for all j
+
+  X.scaled <- scale(X, center=F, scale=sqrt(colSums(X^2)))
+  X_scaled <- X.scaled[,]
 
   X_knock = switch(match.arg(method),
               "equi" = create_equi(X_scaled),
               "sdp"  = create_sdp(X_scaled)
   )
-
   res <- list(X_scaled, X_knock, y)
   names(res) <- c("X","Xk","y")
   return(res)
 }
-
-
-
-
 

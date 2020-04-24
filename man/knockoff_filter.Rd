@@ -4,7 +4,7 @@
 \alias{knockoff_filter}
 \title{Runs knockoff procedure}
 \usage{
-knockoff_filter(X, y, method = c("sdp", "equi"), fdr = 0.2, plus = T)
+knockoff_filter(X, y, method = c("sdp", "equi"), fdr = 0.2, plus = TRUE)
 }
 \arguments{
 \item{X}{n-by-p design matrix, with \eqn{n > p}.}

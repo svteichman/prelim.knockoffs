@@ -9,6 +9,6 @@
 #'
 #' @export
 select_variables <- function(W, thresh) {
-  selected <- sort(which(W > thresh))
+  selected <- sort(which(W >= thresh))
   return(selected)
 }

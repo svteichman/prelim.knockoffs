@@ -58,8 +58,23 @@ solve_sdp <- function(Sigma, gaptol = 1e-6, maxit = 1000) {
     warning('Dual problem is unbounded.')
   }
 
-  # COMPENSATE FOR NUMERICAL ISSUES - FEASIBILITY
-  # COME BACK HERE IF PROCEDURE IS AT ALL DIFFERENT FROM THEIR METHOD
+  # Check if resulting matrix is PSD. If not, lower the s values gradually
+  if (!check_PSD(2*corr - diag(s))) {
+    PSD <- FALSE
+    s_factor <- 1e-8
+    lim <- 0.1
+    while (PSD == FALSE & s_factor <= lim) {
+      if (check_PSD(2*corr - diag(s*(1-s_factor)), tol = 1e-9)) {
+        PSD <- TRUE
+        s <- s*(1-s_factor)
+      }
+      s_factor <- s_factor*10
+    }
+  }
+  if (s_factor == 1) {
+    s <- s*0
+  }
+  s[s<0] <- 0
 
   # Check for power
   if (sum(s) == 0) {
@@ -67,5 +82,5 @@ solve_sdp <- function(Sigma, gaptol = 1e-6, maxit = 1000) {
   }
 
   # return optimal s
-  return(s)
+  return(s*diag(Sigma))
 }

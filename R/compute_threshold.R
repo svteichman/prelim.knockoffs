@@ -11,7 +11,7 @@
 #' @export
 compute_threshold <- function(W, q, plus) {
   # get set of possible threshold values
-  set_W <- sort(unique(abs(W)))
+  set_W <- sort(abs(W))
   set_W <- set_W[set_W > 0]
 
   # account for the additional 1 in the numerator for Knockoff+ procedure
@@ -25,7 +25,6 @@ compute_threshold <- function(W, q, plus) {
   }
 
   t_ratios <- lapply(set_W, function(t) ratio(W, t, offset))
-  ind <- ifelse(sum(t_ratios < q) == 0, 0, min(which(t_ratios < q)))
+  ind <- ifelse(sum(t_ratios <= q) == 0, 0, min(which(t_ratios <= q)))
   return(set_W[ind])
 }
-

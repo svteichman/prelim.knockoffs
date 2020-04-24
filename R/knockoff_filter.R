@@ -36,7 +36,7 @@
 #' results <- knockoff_filter(X, y, 'equi', 0.20, TRUE)
 #'
 #' @export
-knockoff_filter <- function(X, y, method = c('sdp','equi'), fdr = .20, plus = T) {
+knockoff_filter <- function(X, y, method = c('sdp','equi'), fdr = .20, plus = TRUE) {
   n <- nrow(X)
   p <- ncol(X)
   n_y <- length(y)
