@@ -32,7 +32,6 @@
 #'
 #' @export
 create_knockoffs <- function(X, y, method = c('sdp','equi')) {
-  #method = match.arg(method)
   n = nrow(X)
   p = ncol(X)
 
