@@ -16,17 +16,19 @@ solve_sdp <- function(Sigma, gaptol = 1e-6, maxit = 1000) {
   corr <- stats::cov2cor(Sigma)
   # Make linear cone blocks
   # Constraint that each s_j >= 0
-  A1 <- diag(-1,p)
+  A1 <- -Matrix::Diagonal(p)
   C1 <- rep(0,p)
   # Constraint that each s_j <= 1
-  A2 <- diag(1,p)
+  A2 <- Matrix::Diagonal(p)
   C2 <- rep(1,p)
 
-  # Make PSD cone block
-  A_PSD <- matrix(0, nrow = p, ncol = p*p)
+  diagonal <- rep(0, p*p)
   for (i in 1:p) {
-    A_PSD[i,((i-1)*p+i)] <- 1
+    diagonal[(i-1)*p+i] <- 1
   }
+  A_PSD <- Matrix::Diagonal(p^2, x = diagonal)
+  A_PSD <- A_PSD[which(Matrix::rowSums(A_PSD) == 1), ]
+
   C_PSD <- c(2*corr)
 
   # Combine linear and PSD cone blocks
