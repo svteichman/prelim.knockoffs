@@ -59,9 +59,9 @@ solve_sdp <- function(Sigma, gaptol = 1e-6, maxit = 1000) {
   }
 
   # Check if resulting matrix is PSD. If not, lower the s values gradually
+  s_factor <- 1e-8
   if (!check_PSD(2*corr - diag(s))) {
     PSD <- FALSE
-    s_factor <- 1e-8
     lim <- 0.1
     while (PSD == FALSE & s_factor <= lim) {
       if (check_PSD(2*corr - diag(s*(1-s_factor)), tol = 1e-9)) {
