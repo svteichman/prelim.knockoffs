@@ -39,7 +39,7 @@ run_BHq_white_noise <- function(X, y, fdr) {
     return(num/denom)
   }
   t_ratio <- sapply(t_seq, function(t) get_ratio(Z, t, p))
-  ind <- ifelse(sum(t_ratio <= q) == 0, 0, min(which(t_ratios <= q)))
+  ind <- ifelse(sum(t_ratio <= fdr) == 0, 0, min(which(t_ratios <= fdr)))
   thresh <- t_seq[ind]
 
   selected <- which(abs(Z) >= thresh)
