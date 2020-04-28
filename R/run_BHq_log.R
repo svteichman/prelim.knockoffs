@@ -35,7 +35,7 @@ run_BHq_log <- function(X, y, fdr) {
   }
   t_ratio <- sapply(t_seq, function(t) get_ratio(Z, t, p))
   S_p <- sum(1/1:p)
-  ind <- ifelse(sum(t_ratio <= fdr) == 0, 0, min(which(t_ratios <= fdr)))
+  ind <- ifelse(sum(t_ratio <= fdr) == 0, 0, min(which(t_ratio <= fdr)))
   thresh <- t_seq[ind]
 
   selected <- which(abs(Z) >= thresh)
