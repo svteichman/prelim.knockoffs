@@ -19,16 +19,15 @@ run_BHq_white_noise <- function(X, y, fdr) {
   n <- nrow(X)
   p <- ncol(X)
   Sigma <- t(X) %*% X
-  Sigma_inv <- solve(Sigma )
-  Sig_inv_diag <- diag(Sigma_inv)
+  Sigma_inv <- solve(Sigma)
   beta_ols <- Sigma_inv %*% t(X) %*% y
   sig_hat <- sqrt(sum((y - X %*% beta_ols)^2)/(n-p)) #estimate of sigma
 
-  lambda_min <- min(eigen(Sigma)$values)
-  cov <- sig_hat*((1/lambda_min)*diag(nrow=p) - Sigma_inv)
+  lambda_min <- min(eigen(Sigma, symmetric=TRUE, only.values = TRUE)$values)
+  cov <- sig_hat^2*((1/lambda_min)*diag(nrow=p) - Sigma_inv)
   Z_prime <- mvtnorm::rmvnorm(1, rep(0,p), cov)
 
-  Z <- (beta_ols[,1]+Z_prime[1,])/(sig_hat*sqrt(1/lambda_min))
+  Z <- (beta_ols[,1]+Z_prime[1,])*sqrt(lambda_min)/sig_hat
   t_max <- max(abs(Z))
   t_diff <- t_max/1000
   t_seq <- seq(t_diff,t_max,t_diff)
