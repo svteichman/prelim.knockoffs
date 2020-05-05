@@ -8,6 +8,9 @@
 #' These are two different methods to generate the p-dimensional s vector, which is used to constuct the knockoff variables.
 #' @param fdr desired false discovery rate.
 #' @param plus True for knockoff+ procedure, false for knockoff procedure.
+#' @param randomize If true, U tilde is a random matrix. If false, U tilde is the second half of the
+#' matrix Q, where Q is part of the QR decomposition of an nx2p matrix \eqn{[U\ 0]}, where \eqn{X = UDV^T}.
+#' default is false.
 #'
 #' @return A list containing:
 #'  \item{X}{n-by-p design matrix, rescaled so that \eqn{||X_j||^2_2 = 1}, and augmented if \eqn{n < 2p}.}
@@ -36,13 +39,13 @@
 #' results <- knockoff_filter(X, y, 'equi', 0.20, TRUE)
 #'
 #' @export
-knockoff_filter <- function(X, y, method = c('sdp','equi'), fdr = .20, plus = TRUE) {
+knockoff_filter <- function(X, y, method = c('sdp','equi'), fdr = .20, plus = TRUE, randomize = FALSE) {
   n <- nrow(X)
   p <- ncol(X)
   n_y <- length(y)
   if (n != n_y) stop("X and  y must have the same number of observations")
 
-  knock <- create_knockoffs(X, y, method = method)
+  knock <- create_knockoffs(X, y, method = method, randomize = randomize)
   X <- knock$X
   Xk <- knock$Xk
   y <- knock$y

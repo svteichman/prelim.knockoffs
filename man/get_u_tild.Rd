@@ -4,10 +4,14 @@
 \alias{get_u_tild}
 \title{Construct \eqn{\widetilde{U}}}
 \usage{
-get_u_tild(X)
+get_u_tild(X, randomize = FALSE)
 }
 \arguments{
 \item{X}{Design matrix to create knockoffs for.}
+
+\item{randomize}{If true, U tilde is a random matrix. If false, U tilde is the second half of the
+matrix Q, where Q is part of the QR decomposition of an nx2p matrix \eqn{[U\ 0]}, where \eqn{X = UDV^T}.
+default is false.}
 }
 \value{
 The orthonormal nxp matrix \eqn{\widetilde{U}}.

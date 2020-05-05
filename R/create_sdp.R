@@ -2,11 +2,14 @@
 #' Creates fixed-X knockoffs using the SDP method
 #'
 #' @param X Design matrix to create knockoffs for.
+#' @param randomize If true, U tilde is a random matrix. If false, U tilde is the second half of the
+#' matrix Q, where Q is part of the QR decomposition of an nx2p matrix \eqn{[U\ 0]}, where \eqn{X = UDV^T}.
+#' default is false.
 #'
 #' @return The knockoff nxp design matrix.
 #'
 #' @export
-create_sdp <- function(X) {
+create_sdp <- function(X, randomize = FALSE) {
   rank <- qr(X)$rank
   p <- ncol(X)
   if (rank < p) warning('X is not full rank. Proceeding with knockoffs',immediate.=T)
@@ -16,7 +19,7 @@ create_sdp <- function(X) {
   d <- X_svd$d
   d_inv = 1 / d
   v <- X_svd$v
-  u_tild <- get_u_tild(X)
+  u_tild <- get_u_tild(X, randomize = randomize)
 
   Sigma <- v %*% diag(d^2) %*% t(v)
   Sigma_inv <- v %*% diag(d_inv^2) %*% t(v)

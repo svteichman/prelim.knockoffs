@@ -10,7 +10,7 @@ Ann. Statist. 43 (2015), no. 5, 2055--2085.
 https://projecteuclid.org/euclid.aos/1438606853
 }
 \usage{
-create_knockoffs(X, y, method = c("sdp", "equi"))
+create_knockoffs(X, y, method = c("sdp", "equi"), randomize = FALSE)
 }
 \arguments{
 \item{X}{n-by-p design matrix, with \eqn{n > p}.}
@@ -20,6 +20,10 @@ This is used in the setting in which \eqn{n < 2p}, to estimate sigma hat and gen
 
 \item{method}{either "equi" or "sdp" (default: "sdp").
 These are two different methods to generate the p-dimensional s vector, which is used to constuct the knockoff variables.}
+
+\item{randomize}{If true, U tilde is a random matrix. If false, U tilde is the second half of the
+matrix Q, where Q is part of the QR decomposition of an nx2p matrix \eqn{[U\ 0]}, where \eqn{X = UDV^T}.
+default is false.}
 }
 \value{
 A list containing:

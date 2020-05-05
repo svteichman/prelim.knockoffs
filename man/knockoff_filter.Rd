@@ -4,7 +4,14 @@
 \alias{knockoff_filter}
 \title{Runs knockoff procedure}
 \usage{
-knockoff_filter(X, y, method = c("sdp", "equi"), fdr = 0.2, plus = TRUE)
+knockoff_filter(
+  X,
+  y,
+  method = c("sdp", "equi"),
+  fdr = 0.2,
+  plus = TRUE,
+  randomize = FALSE
+)
 }
 \arguments{
 \item{X}{n-by-p design matrix, with \eqn{n > p}.}
@@ -17,6 +24,10 @@ These are two different methods to generate the p-dimensional s vector, which is
 \item{fdr}{desired false discovery rate.}
 
 \item{plus}{True for knockoff+ procedure, false for knockoff procedure.}
+
+\item{randomize}{If true, U tilde is a random matrix. If false, U tilde is the second half of the
+matrix Q, where Q is part of the QR decomposition of an nx2p matrix \eqn{[U\ 0]}, where \eqn{X = UDV^T}.
+default is false.}
 }
 \value{
 A list containing:

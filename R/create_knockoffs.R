@@ -7,6 +7,9 @@
 #' These are two different methods to generate the p-dimensional s vector, which is used to constuct the knockoff variables.
 #' @param y response vector of length n.
 #' This is used in the setting in which \eqn{n < 2p}, to estimate sigma hat and generate additional rows in X and y.
+#' @param randomize If true, U tilde is a random matrix. If false, U tilde is the second half of the
+#' matrix Q, where Q is part of the QR decomposition of an nx2p matrix \eqn{[U\ 0]}, where \eqn{X = UDV^T}.
+#' default is false.
 #' @return A list containing:
 #'  \item{X}{n-by-p design matrix, rescaled so that \eqn{||X_j||^2_2 = 1}, and augmented if \eqn{n < 2p}.}
 #'  \item{X_knock}{n-by-p matrix of knockoff variables.}
@@ -31,7 +34,7 @@
 #' knock <- create_knockoffs(X, y, method = 'sdp')
 #'
 #' @export
-create_knockoffs <- function(X, y, method = c('sdp','equi')) {
+create_knockoffs <- function(X, y, method = c('sdp','equi'), randomize = FALSE) {
   n = nrow(X)
   p = ncol(X)
 
@@ -56,8 +59,8 @@ create_knockoffs <- function(X, y, method = c('sdp','equi')) {
   X_scaled <- X.scaled[,]
 
   X_knock = switch(match.arg(method),
-              "equi" = create_equi(X_scaled),
-              "sdp"  = create_sdp(X_scaled)
+              "equi" = create_equi(X_scaled, randomize = randomize),
+              "sdp"  = create_sdp(X_scaled, randomize = randomize)
   )
   res <- list(X_scaled, X_knock, y)
   names(res) <- c("X","Xk","y")
