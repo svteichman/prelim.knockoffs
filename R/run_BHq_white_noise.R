@@ -18,8 +18,15 @@
 run_BHq_white_noise <- function(X, y, fdr) {
   n <- nrow(X)
   p <- ncol(X)
-  Sigma <- t(X) %*% X
-  Sigma_inv <- solve(Sigma)
+
+  X_svd <- svd_sign(X)
+  d <- X_svd$d
+  d_inv = 1 / d
+  v <- X_svd$v
+
+  Sigma <- v %*% diag(d^2) %*% t(v)
+  Sigma_inv <- v %*% diag(d_inv^2) %*% t(v)
+
   beta_ols <- Sigma_inv %*% t(X) %*% y
   sig_hat <- sqrt(sum((y - X %*% beta_ols)^2)/(n-p)) #estimate of sigma
 
