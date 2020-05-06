@@ -7,7 +7,7 @@
 #'
 #' @export
 check_PSD <- function(M, tol = 1e-9) {
-  lambda_min <- min(eigen(M, symmetric = TRUE, only.values = TRUE)$values)
+  lambda_min <- min(eigen(M)$values)
   PSD <- lambda_min > (tol*10)
   return(PSD)
 }
