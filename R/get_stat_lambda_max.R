@@ -54,12 +54,3 @@ get_stat_lambda_max <- function(X, Xk, y) {
   W_unswap <- W*(1-2*swap)
   return(W_unswap)
 }
-
-
-
-swap = rbinom(ncol(X),1,0.5)
-swap.M = matrix(swap,nrow=nrow(X),ncol=length(swap),byrow=TRUE)
-X.swap  = X * (1-swap.M) + Xk * swap.M
-Xk.swap = X * swap.M + Xk * (1-swap.M)
-
-W = W * (1-2*swap)
