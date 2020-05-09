@@ -20,7 +20,7 @@ get_stat_lambda_max <- function(X, Xk, y) {
 
   # randomly permute original variables and knockoff variables
   # because glmnet fits LASSO with coordinate descent, order of variables affects coefficients
-  swap <- rbinom(p/2,1,0.5)
+  swap <- stats::rbinom(p/2,1,0.5)
   to_swap <- which(swap == 1)
   X_aug_s <- X_aug
   X_aug_s[,to_swap] <- X_aug[,to_swap + p/2]

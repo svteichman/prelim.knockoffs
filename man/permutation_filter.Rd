@@ -38,7 +38,7 @@ X <- matrix(stats::rnorm(n*p), nrow = n)
 true_covar <- sample(p, k)
 beta <- 5 * (1:p \%in\% true_covar)
 y <- X \%*\% beta + stats::rnorm(n, mean = 0, sd = 1)
-results <- permutation_filter(X, y, 'equi', 0.20, TRUE)
+results <- permutation_filter(X, y, 0.20, TRUE)
 
 }
 \references{

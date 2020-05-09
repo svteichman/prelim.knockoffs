@@ -9,6 +9,8 @@ check_PSD(M, tol = 1e-09)
 }
 \arguments{
 \item{M}{Matrix to check whether it is positive semi-definite.}
+
+\item{tol}{Tolerance when comparing smallest eigenvalue to 0.}
 }
 \value{
 TRUE if the matrix is PSD, FALSE otherwise.
