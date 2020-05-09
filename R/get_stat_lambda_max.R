@@ -18,15 +18,23 @@ get_stat_lambda_max <- function(X, Xk, y) {
   p <- ncol(X_aug)
   X_aug <- scale(X_aug)[,] #standardize
 
+  # randomly permute original variables and knockoff variables
+  # because glmnet fits LASSO with coordinate descent, order of variables affects coefficients
+  swap <- rbinom(p/2,1,0.5)
+  to_swap <- which(swap == 1)
+  X_aug_s <- X_aug
+  X_aug_s[,to_swap] <- X_aug[,to_swap + p/2]
+  X_aug_s[,to_swap + p/2] <- X_aug[,to_swap]
+
   # construct list of potential lambdas
   num_lambda <- 500
-  lambda_max <- max(abs(t(X_aug) %*% y))/n
+  lambda_max <- max(abs(t(X_aug_s) %*% y))/n
   lambda_min <- lambda_max/(2e3)
   k <- (0:(num_lambda - 1))/num_lambda
   lambda <- lambda_max * (lambda_min/lambda_max)^k
 
   # fit penalized regression via glmnet
-  mod <- glmnet::glmnet(X_aug, y, family = "gaussian", lambda = lambda, intercept=T,
+  mod <- glmnet::glmnet(X_aug_s, y, family = "gaussian", lambda = lambda, intercept=T,
                         standardize=F, standardize.response=F)
   first_entry <- function(vect) {
     index <- ifelse(sum(abs(vect) > 0) == 0, 0, min(which(abs(vect) > 0)))
@@ -43,5 +51,15 @@ get_stat_lambda_max <- function(X, Xk, y) {
   W <- pmax(Z, Z_tild)
   W <- W*sign
 
-  return(W)
+  W_unswap <- W*(1-2*swap)
+  return(W_unswap)
 }
+
+
+
+swap = rbinom(ncol(X),1,0.5)
+swap.M = matrix(swap,nrow=nrow(X),ncol=length(swap),byrow=TRUE)
+X.swap  = X * (1-swap.M) + Xk * swap.M
+Xk.swap = X * swap.M + Xk * (1-swap.M)
+
+W = W * (1-2*swap)
