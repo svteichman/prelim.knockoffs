@@ -47,7 +47,9 @@ create_knockoffs <- function(X, y, method = c('sdp','equi'), randomize = FALSE) 
     sig_hat <- sqrt(sum((y - X %*% beta_ols)^2)/(n-p)) #estimate of sigma
 
     X <- rbind(X, matrix(0,nrow = extra, ncol = p)) #augment X with 0's
-    set.seed(0)
+    if (randomize == FALSE) {
+      set.seed(0)
+    }
     y_extra <- stats::rnorm(extra, mean = 0, sd = sig_hat)
     y <- c(y, y_extra)
   }
