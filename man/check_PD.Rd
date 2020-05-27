@@ -2,7 +2,7 @@
 % Please edit documentation in R/check_PD.R, R/check_PSD.R
 \name{check_PD}
 \alias{check_PD}
-\title{Check Positive semi-definite
+\title{Check Positive definite
 Checks if the given matrix is positive definite.}
 \usage{
 check_PD(M, tol = 1e-09)
@@ -15,12 +15,12 @@ check_PD(M, tol = 1e-09)
 \item{tol}{Tolerance when comparing smallest eigenvalue to 0.}
 }
 \value{
-TRUE if the matrix is PSD, FALSE otherwise.
+TRUE if the matrix is PD, FALSE otherwise.
 
 TRUE if the matrix is PSD, FALSE otherwise.
 }
 \description{
-Check Positive semi-definite
+Check Positive definite
 Checks if the given matrix is positive definite.
 
 Check Positive semi-definite
